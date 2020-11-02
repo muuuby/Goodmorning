@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/set_group1_label">
+        <ListPreference
+            android:entries="@array/setting_list_label"
+            android:entryValues="@array/setting_list_value"
+            android:summary="This is summary"
+            android:defaultValue="daily"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>
