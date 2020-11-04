@@ -1,8 +1,11 @@
 package com.example.goodmorning;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +21,10 @@ import java.net.URL;
 
 public class fragment_weather extends Fragment {
     TextView winddire,windspeed,wet,qiya;
+    TextView h1,h2,h3,h4,h5,h6,h7,h11,h22,h33,h44,h55,h66,h77,h111,h222,h333,h444,h555,h666,h777;
 
     Handler handler;
+    String cityname;
 
     private LayoutInflater inflater;
     private ViewGroup container;
@@ -38,7 +43,35 @@ public class fragment_weather extends Fragment {
         windspeed = fragment1.findViewById(R.id.windspeed);
         qiya = fragment1.findViewById(R.id.qiya);
 
-        final String data[] = new String[10];
+        h1 = fragment1.findViewById(R.id.h1);
+        h11 = fragment1.findViewById(R.id.h11);
+        h111 = fragment1.findViewById(R.id.h111);
+
+        h2 = fragment1.findViewById(R.id.h2);
+        h22 = fragment1.findViewById(R.id.h22);
+        h222 = fragment1.findViewById(R.id.h222);
+
+        h3 = fragment1.findViewById(R.id.h3);
+        h33 = fragment1.findViewById(R.id.h33);
+        h333 = fragment1.findViewById(R.id.h333);
+
+        h4 = fragment1.findViewById(R.id.h4);
+        h44 = fragment1.findViewById(R.id.h44);
+        h444 = fragment1.findViewById(R.id.h444);
+
+        h5 = fragment1.findViewById(R.id.h5);
+        h55 = fragment1.findViewById(R.id.h55);
+        h555 = fragment1.findViewById(R.id.h555);
+
+        h6 = fragment1.findViewById(R.id.h6);
+        h66 = fragment1.findViewById(R.id.h66);
+        h666 = fragment1.findViewById(R.id.h666);
+
+        h7 = fragment1.findViewById(R.id.h7);
+        h77 = fragment1.findViewById(R.id.h77);
+        h777 = fragment1.findViewById(R.id.h777);
+
+        final String data[] = new String[35];
         handler = new Handler() {
             public void handleMessage(Message msg) {
                 if (msg.what == 3) {
@@ -64,10 +97,89 @@ public class fragment_weather extends Fragment {
                     wet.setText(d3[1]);
                     qiya.setText(d5[1]);
                     windspeed.setText(ws);
+
+                    //未来24小时
+                    data[10] = bdl.getString("76");
+                    String[] d10 = data[10].split("\"|\\（");
+                    data[11] = bdl.getString("78");
+                    String[] d11 = data[11].split("\"");
+                    data[12] = bdl.getString("80");
+                    String[] d12 = data[12].split("\"");
+                    h1.setText(d10[1]);
+                    h11.setText(d11[1]);
+                    h111.setText(d12[1]);
+
+                    data[13] = bdl.getString("89");
+                    String[] d13 = data[13].split("\"|\\（");
+                    data[14] = bdl.getString("91");
+                    String[] d14 = data[14].split("\"");
+                    data[15] = bdl.getString("93");
+                    String[] d15 = data[15].split("\"");
+                    h2.setText(d13[1]);
+                    h22.setText(d14[1]);
+                    h222.setText(d15[1]);
+
+                    data[16] = bdl.getString("102");
+                    String[] d16 = data[16].split("\"|\\（");
+                    data[17] = bdl.getString("104");
+                    String[] d17 = data[17].split("\"");
+                    data[18] = bdl.getString("106");
+                    String[] d18 = data[18].split("\"");
+                    h3.setText(d16[1]);
+                    h33.setText(d17[1]);
+                    h333.setText(d18[1]);
+
+                    data[19] = bdl.getString("115");
+                    String[] d19 = data[19].split("\"|\\（");
+                    data[20] = bdl.getString("117");
+                    String[] d20 = data[20].split("\"");
+                    data[21] = bdl.getString("119");
+                    String[] d21 = data[21].split("\"");
+                    h4.setText(d19[1]);
+                    h44.setText(d20[1]);
+                    h444.setText(d21[1]);
+
+                    data[22] = bdl.getString("128");
+                    String[] d22 = data[22].split("\"|\\（");
+                    data[23] = bdl.getString("130");
+                    String[] d23 = data[23].split("\"");
+                    data[24] = bdl.getString("132");
+                    String[] d24 = data[24].split("\"");
+                    h5.setText(d22[1]);
+                    h55.setText(d23[1]);
+                    h555.setText(d24[1]);
+
+                    data[25] = bdl.getString("141");
+                    String[] d25 = data[25].split("\"|\\（");
+                    data[26] = bdl.getString("143");
+                    String[] d26 = data[26].split("\"");
+                    data[27] = bdl.getString("145");
+                    String[] d27 = data[27].split("\"");
+                    h6.setText(d25[1]);
+                    h66.setText(d26[1]);
+                    h666.setText(d27[1]);
+
+                    data[28] = bdl.getString("157");
+                    String[] d28 = data[28].split("\"|\\（");
+                    data[29] = bdl.getString("159");
+                    String[] d29 = data[29].split("\"");
+                    data[30] = bdl.getString("161");
+                    String[] d30 = data[30].split("\"");
+                    h7.setText(d28[1]);
+                    h77.setText(d29[1]);
+                    h777.setText(d30[1]);
+
                 }
                 super.handleMessage(msg);
             }
         };
+
+        //读取城市和星座
+        final SharedPreferences sharedPreferences = getActivity().getSharedPreferences("identity", Activity.MODE_PRIVATE);
+        PreferenceManager.getDefaultSharedPreferences(getContext());
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        cityname = sharedPreferences.getString("city", "");
 
         //开启子线程
         fragment_weather.myThread t = new fragment_weather.myThread();
@@ -79,9 +191,8 @@ public class fragment_weather extends Fragment {
     public class myThread implements Runnable {
         @Override
         public void run() {
-
             //weather data
-            String cityname = "成都";
+//           cityname = "成都";
             String url = "https://api.djapi.cn/rtweather/get?cityname_ch="+cityname+"&cn_to_unicode=0&token=fef56038bf629f09129d7521716fa5f0&datatype=json";
             try {
                 //从接口获取数据
@@ -101,6 +212,7 @@ public class fragment_weather extends Fragment {
 
                 for(int i=0;i<elements.length;i++) {
                     bdl.putString("" + i, elements[i]);
+                    System.out.println(elements[i]+i);
                 }
 
                 msg.setData(bdl);
