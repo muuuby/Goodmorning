@@ -62,7 +62,6 @@ public class fragment_luck extends ListFragment implements AdapterView.OnItemCli
                 item = lm.findById(i);
                 String date = item.getdate();
                 String detail = item.getdetail();
-                Log.i(TAG,detail+i);
                 map.put("ItemTitle", date);
                 map.put("ItemDetail", detail);
                 listItems.add(map);

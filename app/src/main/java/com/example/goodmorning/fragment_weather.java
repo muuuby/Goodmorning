@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,104 +70,75 @@ public class fragment_weather extends Fragment {
         h77 = fragment1.findViewById(R.id.h77);
         h777 = fragment1.findViewById(R.id.h777);
 
-        final String data[] = new String[35];
+        final String data[] = new String[30];
         handler = new Handler() {
             public void handleMessage(Message msg) {
                 if (msg.what == 3) {
                     Bundle bdl = msg.getData();
-                    //解析数据
-                    data[3] = bdl.getString("25");
-                    String[] d3 = data[3].split("\"");
-                    data[5] = bdl.getString("31");
-                    String[] d5 = data[5].split("\"");
-                    data[7] = bdl.getString("35");
-                    String[] d7 = data[7].split("\"");
 
-                    String ws;
-                    data[9] = bdl.getString("41");
-                    String[] d9 = data[9].split("\"");
-                    if(d9.length<2){
-                        ws = "0";
-                    }else{
-                        ws = d9[1];
+                    String errocode = bdl.getString("1");
+                    String[] erro = errocode.split("\":\"|\",\"|\":|,");
+
+                    if(erro[3].equals("0")){    //如果查询有结果
+                        //解析数据
+                        data[5] = bdl.getString("5");
+                        String[] d5 = data[5].split(",\"|\":\"|\",\"|\":");
+                        wet.setText(d5[2]);
+                        qiya.setText(d5[8]);
+
+                        data[6] = bdl.getString("6");
+                        String[] d6 = data[6].split("\":\"|\",\"");
+                        winddire.setText(d6[1]);
+                        if(d6[7].equals("")){
+                            windspeed.setText("0");
+                        }else{
+                            windspeed.setText(d6[7]);
+                        }
+
+
+                        //未来24小时
+                        data[15] = bdl.getString("15");
+                        String[] d15 = data[15].split("\":\"|（|）|\",\"");
+                        h1.setText(d15[1]);
+                        h11.setText(d15[5]);
+                        h111.setText(d15[7]);
+
+                        data[17] = bdl.getString("17");
+                        String[] d17 = data[17].split("\":\"|（|）|\",\"");
+                        h2.setText(d17[1]);
+                        h22.setText(d17[5]);
+                        h222.setText(d17[7]);
+
+                        data[21] = bdl.getString("21");
+                        String[] d21 = data[21].split("\":\"|（|）|\",\"");
+                        h3.setText(d21[1]);
+                        h33.setText(d21[5]);
+                        h333.setText(d21[7]);
+
+                        data[23] = bdl.getString("23");
+                        String[] d23 = data[23].split("\":\"|（|）|\",\"");
+                        h4.setText(d23[1]);
+                        h44.setText(d23[5]);
+                        h444.setText(d23[7]);
+
+                        data[25] = bdl.getString("25");
+                        String[] d25 = data[25].split("\":\"|（|）|\",\"");
+                        h5.setText(d25[1]);
+                        h55.setText(d25[5]);
+                        h555.setText(d25[7]);
+
+                        data[27] = bdl.getString("27");
+                        String[] d27 = data[27].split("\":\"|（|）|\",\"");
+                        h6.setText(d27[1]);
+                        h66.setText(d27[5]);
+                        h666.setText(d27[7]);
+
+                        data[29] = bdl.getString("29");
+                        String[] d29 = data[29].split("\":\"|（|）|\",\"");
+                        h7.setText(d29[1]);
+                        h77.setText(d29[5]);
+                        h777.setText(d29[7]);
                     }
-
-                    winddire.setText(d7[1]);
-                    wet.setText(d3[1]);
-                    qiya.setText(d5[1]);
-                    windspeed.setText(ws);
-
-                    //未来24小时
-                    data[10] = bdl.getString("76");
-                    String[] d10 = data[10].split("\"|\\（");
-                    data[11] = bdl.getString("78");
-                    String[] d11 = data[11].split("\"");
-                    data[12] = bdl.getString("80");
-                    String[] d12 = data[12].split("\"");
-                    h1.setText(d10[1]);
-                    h11.setText(d11[1]);
-                    h111.setText(d12[1]);
-
-                    data[13] = bdl.getString("89");
-                    String[] d13 = data[13].split("\"|\\（");
-                    data[14] = bdl.getString("91");
-                    String[] d14 = data[14].split("\"");
-                    data[15] = bdl.getString("93");
-                    String[] d15 = data[15].split("\"");
-                    h2.setText(d13[1]);
-                    h22.setText(d14[1]);
-                    h222.setText(d15[1]);
-
-                    data[16] = bdl.getString("102");
-                    String[] d16 = data[16].split("\"|\\（");
-                    data[17] = bdl.getString("104");
-                    String[] d17 = data[17].split("\"");
-                    data[18] = bdl.getString("106");
-                    String[] d18 = data[18].split("\"");
-                    h3.setText(d16[1]);
-                    h33.setText(d17[1]);
-                    h333.setText(d18[1]);
-
-                    data[19] = bdl.getString("115");
-                    String[] d19 = data[19].split("\"|\\（");
-                    data[20] = bdl.getString("117");
-                    String[] d20 = data[20].split("\"");
-                    data[21] = bdl.getString("119");
-                    String[] d21 = data[21].split("\"");
-                    h4.setText(d19[1]);
-                    h44.setText(d20[1]);
-                    h444.setText(d21[1]);
-
-                    data[22] = bdl.getString("128");
-                    String[] d22 = data[22].split("\"|\\（");
-                    data[23] = bdl.getString("130");
-                    String[] d23 = data[23].split("\"");
-                    data[24] = bdl.getString("132");
-                    String[] d24 = data[24].split("\"");
-                    h5.setText(d22[1]);
-                    h55.setText(d23[1]);
-                    h555.setText(d24[1]);
-
-                    data[25] = bdl.getString("141");
-                    String[] d25 = data[25].split("\"|\\（");
-                    data[26] = bdl.getString("143");
-                    String[] d26 = data[26].split("\"");
-                    data[27] = bdl.getString("145");
-                    String[] d27 = data[27].split("\"");
-                    h6.setText(d25[1]);
-                    h66.setText(d26[1]);
-                    h666.setText(d27[1]);
-
-                    data[28] = bdl.getString("157");
-                    String[] d28 = data[28].split("\"|\\（");
-                    data[29] = bdl.getString("159");
-                    String[] d29 = data[29].split("\"");
-                    data[30] = bdl.getString("161");
-                    String[] d30 = data[30].split("\"");
-                    h7.setText(d28[1]);
-                    h77.setText(d29[1]);
-                    h777.setText(d30[1]);
-
                 }
                 super.handleMessage(msg);
             }
@@ -203,21 +173,16 @@ public class fragment_weather extends Fragment {
                 while ((line = reader.readLine()) != null) {
                     buffer.append(line);
                 }
-                Log.e("Json","success");
                 String str = buffer.toString();
-                String elements[] = str.split("\\{|\\}|,|:");
-
                 Message msg = handler.obtainMessage(3);
                 Bundle bdl = new Bundle();
 
+                String elements[] = str.split("\\{|\\}");
                 for(int i=0;i<elements.length;i++) {
                     bdl.putString("" + i, elements[i]);
-                    System.out.println(elements[i]+i);
                 }
-
                 msg.setData(bdl);
                 msg.sendToTarget();
-                Log.e("Json","success");
             } catch (Exception e) {
 
             }
